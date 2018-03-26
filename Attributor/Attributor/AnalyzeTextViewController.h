@@ -8,6 +8,6 @@
 
 #import "ViewController.h"
 
-@interface AnalyzeTextViewController : ViewController
+@interface AnalyzeTextViewController : UIViewController
 @property (nonatomic,strong) NSAttributedString *textToAnalyze;
 @end

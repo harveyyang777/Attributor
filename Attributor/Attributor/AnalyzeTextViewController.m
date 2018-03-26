@@ -9,21 +9,27 @@
 #import "AnalyzeTextViewController.h"
 
 @interface AnalyzeTextViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *colorfulCharactersLabel;
+@property (weak, nonatomic) IBOutlet UILabel *outlinedCharactersLabel;
+
+
 
 @end
 
 @implementation AnalyzeTextViewController
 - (void) setTextToAnalyze:(NSAttributedString *)textToAnalyze{
-    _textToAnalyze =textToAnalyze;
+    _textToAnalyze = textToAnalyze;
     if(self.view.window){
         [self updateUI];
-
     }
 }
+
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self updateUI];
+   // [self updateUI];
 }
+
 
 
 -(NSAttributedString *) charactersWithAttribute:(NSString *) attributeName{
@@ -45,7 +51,17 @@
 
 
 -(void) updateUI{
+    NSLog(@"update UI in analyze view control");
+    self.colorfulCharactersLabel.text = [NSString stringWithFormat:@"%lu colorful characters",(unsigned long)[[self charactersWithAttribute:NSForegroundColorAttributeName] length]];
     
+    self.outlinedCharactersLabel.text = [NSString stringWithFormat:@"%lu otlined",(unsigned long)[[self charactersWithAttribute:NSStrokeWidthAttributeName] length]];
+}
+-(void) viewDidLoad{
+    
+    NSLog(@"viewDidload");
+    [super viewDidLoad];
+   // self.textToAnalyze = [[NSAttributedString alloc]initWithString:@"test" attributes:@{NSForegroundColorAttributeName : [UIColor greenColor],NSStrokeWidthAttributeName:@-3}];
+    [self updateUI];
 }
 
 @end

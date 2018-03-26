@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "AnalyzeTextViewController.h"
 
 @interface ViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *headline;
@@ -17,6 +18,17 @@
 
 @implementation ViewController
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"analyzer"]){
+        if ([segue.destinationViewController isKindOfClass:[AnalyzeTextViewController class]]){
+            
+            AnalyzeTextViewController * analyzeText = (AnalyzeTextViewController *)segue.destinationViewController;
+            analyzeText.textToAnalyze = self.body.textStorage;
+            
+        }
+    }
+}
 - (IBAction)change_selected_part_to_color_of_button:(UIButton *)sender {
     [self.body.textStorage addAttribute:NSForegroundColorAttributeName value:sender.backgroundColor range:self.body.selectedRange];
     
@@ -35,7 +47,7 @@
 }
 
 - (void)viewDidLoad {
-    NSLog(@"viewdidload");
+  
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
@@ -45,7 +57,7 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated{
-    NSLog(@"viewWillAppear");
+    
     [super viewWillAppear:animated];
     [  [NSNotificationCenter defaultCenter] addObserver:self selector:@selector(preferredFontChanged:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     
@@ -61,11 +73,7 @@
     self.headline.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
 }
 
--(void) viewWillDisappear:(BOOL)animated{
-    NSLog(@"viewWillDisappear");
-    [self viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIContentSizeCategoryDidChangeNotification object:nil];
-}
+
 
 
 @end
